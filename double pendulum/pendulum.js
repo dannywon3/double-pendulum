@@ -19,9 +19,15 @@ let cx, cy;
 
 let buffer;
 
+let b;
+let ball = false;
+
 function setup() {
     createCanvas(windowWidth, windowHeight);
     // createCanvas(500, 300);
+
+    b = new Ball(width/4, height/4, float(40), floor(random(255)), floor(random(255)), floor(random(255)));
+
 
     //sliders
     slider1 = createSlider(windowHeight / 20, windowHeight / 2, 180);
@@ -49,8 +55,12 @@ function setup() {
     buffer.colorMode(HSB, 255);
 
     button = createButton('Reset Velocity');
-    button.position(19, 19);
+    button.position(19, 50);
     button.mousePressed(reset);
+
+    button = createButton('Add/Remove Ball');
+    button.position(19, 75);
+    button.mousePressed(addBall);
 }
 
 function draw() {
@@ -136,6 +146,13 @@ function draw() {
     // a2_v *= 0.99;
 
 
+    // BALL STUFF
+    if (ball) {
+        b.display();
+        b.update(x1, y1, x2, y2);
+    }
+
+
     //trace line
     buffer.stroke(val3, 255, 255);
     buffer.fill(val3, 255, 255, 127);
@@ -160,4 +177,8 @@ function reset() {
     px1 = -1;
     py1 = -1;
     buffer.background(175);
+}
+
+function addBall() {
+    ball = !ball;
 }
